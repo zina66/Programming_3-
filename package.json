@@ -23,5 +23,6 @@
   "engines": {
     "node": "4.7.2"
   },
+  "devDependencies": {},
   "description": ""
 }

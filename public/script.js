@@ -1,7 +1,17 @@
 var side = 20;
+var matrix = [];
+var socket;
+
 function setup() {
-    frameRate(5);
-    createCanvas(matrix[0].length * side, matrix.length * side);
+    socket = io();
+    frameRate(0);
+
+    socket.on("firstMatrix",function(mtx){
+        matrix = mtx;
+        createCanvas(matrix[0].length * side, matrix.length * side);
+        console.log(matrix);
+    });
+
     background('#acacac');
 }
 
@@ -10,25 +20,30 @@ function draw() {
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x].index == 1) {
-                matrix[y][x].mul();
-            }
-            else if (matrix[y][x] == 0) {
-                fill("#acacac");
+                fill("green");
                 rect(x * side, y * side, side, side);
             }
-            else if (matrix[y][x].index == 2) {
-                    matrix[y][x].eat();
+            else if (matrix[y][x].index  == 2) {
+                fill("yellow");
+                rect(x * side, y * side, side, side);
             }
-            else if (matrix[y][x].index == 3) {
-                matrix[y][x].eat();
+            else if (matrix[y][x].index  == 3) {
+                fill("purple");
+                rect(x * side, y * side, side, side);
             }
-            else if (matrix[y][x].index == 4) {
-                matrix[y][x].eat();
+            else if (matrix[y][x].index  == 4) {
+                fill("red");
+                rect(x * side, y * side, side, side);
             }
-            else if (matrix[y][x].index == 5) {
+            else if (matrix[y][x].index  == 5) {
                 if (x + y > 50) {
-                    matrix[y][x].eat();
+                    fill("blue");
+                    rect(x * side, y * side, side, side);
                 }
+            }
+            else{
+                fill("#acacac");
+                rect(x * side, y * side, side, side);
             }
         }
     }
