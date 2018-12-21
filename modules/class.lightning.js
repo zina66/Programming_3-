@@ -19,31 +19,31 @@ module.exports = class lightning extends LivingCreature{
         ];
     }
 
-    chooseCell(character) {
+    chooseCell(character, matrix) {
         this.getNewCoordinates();
-        return super.chooseCell(character);
+        return super.chooseCell(character, matrix);
 
     }
 
-    move() {
+    move(matrix) {
         this.getNewCoordinates();
 
-        var emptyCells = this.chooseCell(0);
-        var newCell = random(emptyCells);
+        var emptyCells = this.chooseCell(0, matrix);
+        var newCell = Math.floor(Math.random(emptyCells));
 
         if (newCell) {
             this.die();
         }
     }
 
-    eat() {
+    eat(matrix) {
         this.getNewCoordinates();
 
         this.multiply++;
 
-        var emptyCells = this.chooseCell(1);
+        var emptyCells = this.chooseCell(1, matrix);
 
-        var newCell = random(emptyCells);
+        var newCell = Math.floor(Math.random(emptyCells));
 
         if (newCell) {
             if (this.multiply >= 4) {
@@ -60,7 +60,7 @@ module.exports = class lightning extends LivingCreature{
             }
         }
         else {
-            this.move();
+            this.move(matrix);
         }
     }
     die() {

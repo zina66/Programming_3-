@@ -18,7 +18,7 @@ module.exports = class river extends LivingCreature{
         return super.chooseCell(character);
     }
 
-    eat() {
+    eat(matrix) {
         this.multiply++;
 
         if (this.multiply >= 3) {
