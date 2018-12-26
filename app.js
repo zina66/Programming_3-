@@ -11,7 +11,7 @@ app.get('/', function (req, res) {
   res.redirect('index.html');
 });
 
-server.listen(3000); 
+server.listen(3000);
 
 var matrix = require("./modules/matrix");
 console.log(matrix);
@@ -28,8 +28,10 @@ var time = 1000 / framecount;
 
 var weather = "vochinch";
 var weathercount = 0;
+io.on("connection", function () { });
 
 function draw() {
+
   weathercount++;
 
   if (weathercount % 10 == 5) {
@@ -45,16 +47,24 @@ function draw() {
     weather = "winter";
   }
 
+  var xotbazmqanak = 0;
+  var xotakerbazm = 0;
+  var gishatich = 0;
+  var get = 0;
+
   for (var y = 0; y < matrix.length; y++) {
     for (var x = 0; x < matrix[y].length; x++) {
       if (matrix[y][x].index == 1) {
         matrix[y][x].mul(matrix);
+        xotbazmqanak++;
       }
       else if (matrix[y][x].index == 2) {
         matrix[y][x].eat(matrix);
+        xotakerbazm++;
       }
       else if (matrix[y][x].index == 3) {
         matrix[y][x].eat(matrix);
+        gishatich++;
       }
       else if (matrix[y][x].index == 4) {
         matrix[y][x].eat(matrix);
@@ -63,8 +73,22 @@ function draw() {
         if (x + y > 50) {
           matrix[y][x].eat(matrix);
         }
+        get++;
       }
     }
+
+    var fs = require('fs')
+    var obj = {
+      "խոտերի բազմացման քանակը": xotbazmqanak,
+      "Խոտակերի բազմացման քանակը": xotakerbazm,
+      "Գիշատիչի բազմացման քանակը": gishatich,
+      "Գետի հորդառատությունը": get
+    };
+    var myJSON = JSON.stringify(obj);
+    fs.writeFileSync("obj.json", myJSON);
+
   }
 }
 io.sockets.emit("weather", weather);
+
+setInterval(draw, 5000);
